@@ -1,24 +1,44 @@
 import React, { Component } from 'react';
 import { Card, Grid, Button } from 'semantic-ui-react';
 import Layout from '../../components/Layout';
-import Campaign from '../../ethereum/campaign';
-import web3 from '../../ethereum/web3';
+
+import { TezosToolkit } from '@taquito/taquito';
+// import Campaign from '../../ethereum/campaign';
+// import web3 from '../../ethereum/web3';
 import ContributeForm from '../../components/ContributeForm';
 import { Link } from '../../routes';
 
 class CampaignShow extends Component {
   static async getInitialProps(props) {
-    const campaign = Campaign(props.query.address);
-
-    const summary = await campaign.methods.getSummary().call();
-
+    console.log(props.query.name);
+    let requestCount =0;
+    let campaigns=[];
+    const Tezos = new TezosToolkit("https://edonet.smartpy.io/");
+     const contract =  await Tezos.contract.at('KT1WMwPDPDys4qRcZbiXBLinr9XeZip3NAZV');
+    
+      const storage = await contract.storage();
+      // console.log(storage.valueMap);
+      let campaign;
+      storage.valueMap.forEach((key,value)=>{
+        if(value.substring(1,value.length-1) == props.query.address){
+          campaign = {name:key.name,description:key.description,id:value.substring(1,value.length-1),balance:key.balance.c[0],requestsCount:0,approversCount:key.approverCount.c[0],manager:key.address,minimumContribution:key.minimumAmount.c[0]};
+          console.log(key.approverCount);
+          key.requests.forEach((one)=>{
+            requestCount+=1;
+          })
+        }
+      });
+      
+    console.log(campaign);
+    // const campaign = Campaign(props.query.address);
+    // const summary = await campaign.methods.getSummary().call();
     return {
       address: props.query.address,
-      minimumContribution: summary[0],
-      balance: summary[1],
-      requestsCount: summary[2],
-      approversCount: summary[3],
-      manager: summary[4]
+      minimumContribution: campaign.minimumContribution / 1000000,
+      balance: campaign.balance / 1000000 ,
+      requestsCount: requestCount,
+      approversCount: campaign.approversCount,
+      manager: campaign.manager
     };
   }
 
@@ -40,10 +60,10 @@ class CampaignShow extends Component {
         style: { overflowWrap: 'break-word' }
       },
       {
-        header: minimumContribution,
-        meta: 'Minimum Contribution (wei)',
+        header: minimumContribution  + ' ꜩ',
+        meta: 'Minimum Contribution',
         description:
-          'You must contribute at least this much wei to become an approver'
+          'You must contribute at least this much mutez to become an approver'
       },
       {
         header: requestsCount,
@@ -58,8 +78,8 @@ class CampaignShow extends Component {
           'Number of people who have already donated to this campaign'
       },
       {
-        header: web3.utils.fromWei(balance, 'ether'),
-        meta: 'Campaign Balance (ether)',
+        header: balance + ' ꜩ',
+        meta: 'Campaign Balance',
         description:
           'The balance is how much money this campaign has left to spend.'
       }

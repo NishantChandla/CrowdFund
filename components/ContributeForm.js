@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import { Form, Input, Message, Button } from 'semantic-ui-react';
-import Campaign from '../ethereum/campaign';
-import web3 from '../ethereum/web3';
+// import Campaign from '../ethereum/campaign';
+// import web3 from '../ethereum/web3';
 import { Router } from '../routes';
+import { BeaconWallet } from "@taquito/beacon-wallet";
+import {
+  NetworkType,
+  BeaconEvent,
+  defaultEventCallbacks
+} from "@airgap/beacon-sdk";
+import { TezosToolkit } from '@taquito/taquito';
 
 class ContributeForm extends Component {
   state = {
@@ -14,16 +21,51 @@ class ContributeForm extends Component {
   onSubmit = async event => {
     event.preventDefault();
 
-    const campaign = Campaign(this.props.address);
+    // const campaign = Campaign(this.props.address);
 
     this.setState({ loading: true, errorMessage: '' });
 
     try {
-      const accounts = await web3.eth.getAccounts();
-      await campaign.methods.contribute().send({
-        from: accounts[0],
-        value: web3.utils.toWei(this.state.value, 'ether')
+      // const accounts = await web3.eth.getAccounts();
+      // await campaign.methods.contribute().send({
+      //   from: accounts[0],
+      //   value: web3.utils.toWei(this.state.value, 'ether')
+      // });
+      const Tezos = new TezosToolkit("https://edonet.smartpy.io/");
+      // await Tezos.setProvider({ signer: new TezTeigner() });
+      
+      const wallet = new BeaconWallet({
+        name: "Taquito Boilerplate",
+        preferredNetwork: NetworkType.EDONET,
+        disableDefaultEvents: true, // Disable all events / UI. This also disables the pairing alert.
+        eventHandlers: {
+          // To keep the pairing alert, we have to add the following default event handlers back
+          [BeaconEvent.PAIR_INIT]: {
+            handler: defaultEventCallbacks.PAIR_INIT
+          },
+          [BeaconEvent.PAIR_SUCCESS]: {
+            handler: data => setPublicToken(data.publicKey)
+          }
+        }
       });
+      Tezos.setWalletProvider(wallet);
+      await wallet.requestPermissions({
+        network: {
+          type: NetworkType.EDONET,
+          rpcUrl: "https://edonet.smartpy.io/"
+        }
+      });
+      // this.setState({isConnected:true});
+    
+      // gets user's address
+      console.log('yes')
+    
+      let s = this.props.address;
+      // console.log((s).substring(1,s.length-1));
+      const contract =  await Tezos.wallet.at('KT1WMwPDPDys4qRcZbiXBLinr9XeZip3NAZV');
+      // const op = await contract.methods.donate(this.props.address).send();
+      // await op.confirmation();
+
 
       Router.replaceRoute(`/campaigns/${this.props.address}`);
     } catch (err) {
@@ -41,7 +83,7 @@ class ContributeForm extends Component {
           <Input
             value={this.state.value}
             onChange={event => this.setState({ value: event.target.value })}
-            label="ether"
+            label="Mutez"
             labelPosition="right"
           />
         </Form.Field>

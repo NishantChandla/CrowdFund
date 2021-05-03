@@ -5,22 +5,34 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "next dev"
+    "dev": "node server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@ledgerhq/hw-transport-u2f": "^5.22.0",
+    "@taquito/beacon-wallet": "^9.0.0",
+    "@taquito/ledger-signer": "^9.0.0",
+    "@taquito/taquito": "^9.0.0",
+    "@taquito/tezbridge-signer": "^9.0.0",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.6.3",
+    "@types/jest": "^26.0.20",
+    "@types/ledgerhq__hw-transport-u2f": "^4.21.2",
+    "@types/node": "^14.14.25",
+    "@types/react": "^17.0.1",
+    "@types/react-dom": "^17.0.0",
     "fs-extra": "^5.0.0",
     "ganache-cli": "^6.0.3",
     "mocha": "^4.1.0",
     "next": "^10.2.0",
     "next-routes": "^1.4.2",
+    "qrcode-generator": "^1.4.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-scripts": "4.0.2",
     "semantic-ui-css": "^2.2.12",
-    "semantic-ui-react": "^0.77.1",
-    "solc": "^0.4.19",
-    "truffle-hdwallet-provider": "0.0.3",
-    "web3": "1.0.0-beta.26"
+    "semantic-ui-react": "^0.77.1"
   }
 }
