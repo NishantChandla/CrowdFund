@@ -63,8 +63,8 @@ class ContributeForm extends Component {
       let s = this.props.address;
       // console.log((s).substring(1,s.length-1));
       const contract =  await Tezos.wallet.at('KT1WMwPDPDys4qRcZbiXBLinr9XeZip3NAZV');
-      // const op = await contract.methods.donate(this.props.address).send();
-      // await op.confirmation();
+      const op = await contract.methods.donate(this.props.address).send({mutez:true,amount:this.state.value});
+      await op.confirmation();
 
 
       Router.replaceRoute(`/campaigns/${this.props.address}`);
