@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Form, Input, Message, Button } from 'semantic-ui-react';
-// import Campaign from '../ethereum/campaign';
-// import web3 from '../ethereum/web3';
 import { Router } from '../routes';
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import {
@@ -21,21 +19,16 @@ class ContributeForm extends Component {
   onSubmit = async event => {
     event.preventDefault();
 
-    // const campaign = Campaign(this.props.address);
+
 
     this.setState({ loading: true, errorMessage: '' });
 
     try {
-      // const accounts = await web3.eth.getAccounts();
-      // await campaign.methods.contribute().send({
-      //   from: accounts[0],
-      //   value: web3.utils.toWei(this.state.value, 'ether')
-      // });
       const Tezos = new TezosToolkit("https://edonet.smartpy.io/");
       // await Tezos.setProvider({ signer: new TezTeigner() });
-      
+
       const wallet = new BeaconWallet({
-        name: "Taquito Boilerplate",
+        name: "CrowdFund",
         preferredNetwork: NetworkType.EDONET,
         disableDefaultEvents: true, // Disable all events / UI. This also disables the pairing alert.
         eventHandlers: {
@@ -56,10 +49,10 @@ class ContributeForm extends Component {
         }
       });
       // this.setState({isConnected:true});
-    
+
       // gets user's address
       console.log('yes')
-    
+
       let s = this.props.address;
       // console.log((s).substring(1,s.length-1));
       const contract =  await Tezos.wallet.at('KT1WMwPDPDys4qRcZbiXBLinr9XeZip3NAZV');

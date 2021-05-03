@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Table, Button } from 'semantic-ui-react';
-// import web3 from '../ethereum/web3';
-// import Campaign from '../ethereum/campaign';
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import {
   NetworkType,
@@ -12,19 +10,14 @@ import { TezosToolkit } from '@taquito/taquito';
 
 class RequestRow extends Component {
   onApprove = async () => {
-    // const campaign = Campaign(this.props.address);
 
-    // const accounts = await web3.eth.getAccounts();
-    // await campaign.methods.approveRequest(this.props.id).send({
-    //   from: accounts[0]
-    // });
     try {
 
       const Tezos = new TezosToolkit("https://edonet.smartpy.io/");
       // await Tezos.setProvider({ signer: new TezTeigner() });
 
       const wallet = new BeaconWallet({
-        name: "Taquito Boilerplate",
+        name: "CrowdFund",
         preferredNetwork: NetworkType.EDONET,
         disableDefaultEvents: true, // Disable all events / UI. This also disables the pairing alert.
         eventHandlers: {
@@ -58,11 +51,6 @@ class RequestRow extends Component {
       await op.confirmation();
 
 
-      // const accounts = await web3.eth.getAccounts();
-      // await campaign.methods
-      //   .createRequest(description, web3.utils.toWei(value, 'ether'), recipient)
-      //   .send({ from: accounts[0] });
-
       Router.replaceRoute(`/campaigns/${this.props.address}/requests`);
     } catch (err) {
       this.setState({ errorMessage: err.message });
@@ -72,19 +60,13 @@ class RequestRow extends Component {
   };
 
   onFinalize = async () => {
-    // const campaign = Campaign(this.props.address);
-
-    // const accounts = await web3.eth.getAccounts();
-    // await campaign.methods.finalizeRequest(this.props.id).send({
-    //   from: accounts[0]
-    // });
     try {
 
       const Tezos = new TezosToolkit("https://edonet.smartpy.io/");
       // await Tezos.setProvider({ signer: new TezTeigner() });
 
       const wallet = new BeaconWallet({
-        name: "Taquito Boilerplate",
+        name: "CrowdFund",
         preferredNetwork: NetworkType.EDONET,
         disableDefaultEvents: true, // Disable all events / UI. This also disables the pairing alert.
         eventHandlers: {
@@ -118,10 +100,7 @@ class RequestRow extends Component {
       await op.confirmation();
 
 
-      // const accounts = await web3.eth.getAccounts();
-      // await campaign.methods
-      //   .createRequest(description, web3.utils.toWei(value, 'ether'), recipient)
-      //   .send({ from: accounts[0] });
+  
 
       Router.replaceRoute(`/campaigns/${this.props.address}/requests`);
     } catch (err) {

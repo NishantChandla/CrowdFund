@@ -2,7 +2,7 @@ const { createServer } = require('http');
 const next = require('next');
 
 const app = next({
-  dev: process.env.NODE_ENV !== 'production',
+  dev: process.env.NODE_ENV == 'production',
   conf: {
     webpack: config => {
       config.devtool = false;

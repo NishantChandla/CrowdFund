@@ -29,7 +29,7 @@ class CampaignNew extends Component {
       // await Tezos.setProvider({ signer: new TezTeigner() });
 
       const wallet = new BeaconWallet({
-        name: "Taquito Boilerplate",
+        name: "CrowdFund",
         preferredNetwork: NetworkType.EDONET,
         disableDefaultEvents: true, // Disable all events / UI. This also disables the pairing alert.
         eventHandlers: {
