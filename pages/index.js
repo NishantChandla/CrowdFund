@@ -1,6 +1,5 @@
 import React, { Component, useState } from 'react';
 import { Card, Button } from 'semantic-ui-react';
-
 import { TezosToolkit } from '@taquito/taquito';
 import Layout from '../components/Layout';
 import { Link } from '../routes';
@@ -33,17 +32,6 @@ class CampaignIndex extends Component {
         fluid: true
       };
     });
-    // const items = this.props.campaigns.forEach((key,value)=>{
-    //     return {
-    //         header: key.name,
-    //         description: (
-    //           <Link route={`/campaigns/${value}`}>
-    //             <a>View Campaign</a>
-    //           </Link>
-    //         ),
-    //         fluid: true
-    //       };
-    // });
 
     return <Card.Group items={items} />;
   }

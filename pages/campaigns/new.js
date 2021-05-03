@@ -7,9 +7,6 @@ import {
   BeaconEvent,
   defaultEventCallbacks
 } from "@airgap/beacon-sdk";
-// import ConnectButton from "../../components/Connect";
-// import factory from '../../ethereum/factory';
-// import web3 from '../../ethereum/web3';
 import { TezosToolkit } from '@taquito/taquito';
 import { Router } from '../../routes';
 
@@ -27,21 +24,10 @@ class CampaignNew extends Component {
     event.preventDefault();
 
     this.setState({ loading: true, errorMessage: '' });
-//  try {
-//       const op = await contract.methods.decrement(1).send();
-//       await op.confirmation();
-//       const newStorage: any = await contract.storage();
-//       if (newStorage) setStorage(newStorage.toNumber());
-//       setUserBalance(await Tezos.tz.getBalance(userAddress));
-//     } catch (error) {
-//       console.log(error);
-//     } finally {
-//       setLoadingDecrement(false);
-//     }
     try {
       const Tezos = new TezosToolkit("https://edonet.smartpy.io/");
       // await Tezos.setProvider({ signer: new TezTeigner() });
-      
+
       const wallet = new BeaconWallet({
         name: "Taquito Boilerplate",
         preferredNetwork: NetworkType.EDONET,
@@ -63,19 +49,12 @@ class CampaignNew extends Component {
           rpcUrl: "https://edonet.smartpy.io/"
         }
       });
-      // this.setState({isConnected:true});
-    
-      // gets user's address
+
+
       const contract =  await Tezos.wallet.at('KT1WMwPDPDys4qRcZbiXBLinr9XeZip3NAZV');
       const op = await contract.methods.createCampaign(this.state.description,this.state.minimumContribution,this.state.name).send();
       await op.confirmation();
-      // const accounts = await web3.eth.getAccounts();
-      // contract.methods.createCampaign
-      // await factory.methods
-      //   .createCampaign(this.state.minimumContribution)
-      //   .send({
-      //     from: accounts[0]
-      //   });
+
 
       Router.pushRoute('/');
     } catch (err) {
@@ -122,13 +101,8 @@ class CampaignNew extends Component {
           <Button loading={this.state.loading} primary>
             Create!
           </Button>
-        
+
         </Form>
-         {/* <Button primary onClick={this.connectBeacon()} >
-          <span>
-          <i className="fas fa-wallet"></i>&nbsp; Connect with wallet
-          </span>
-          </Button> */}
       </Layout>
     );
   }

@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { Card, Grid, Button } from 'semantic-ui-react';
 import Layout from '../../components/Layout';
-
 import { TezosToolkit } from '@taquito/taquito';
-// import Campaign from '../../ethereum/campaign';
-// import web3 from '../../ethereum/web3';
 import ContributeForm from '../../components/ContributeForm';
 import { Link } from '../../routes';
 
@@ -15,7 +12,7 @@ class CampaignShow extends Component {
     let campaigns=[];
     const Tezos = new TezosToolkit("https://edonet.smartpy.io/");
      const contract =  await Tezos.contract.at('KT1WMwPDPDys4qRcZbiXBLinr9XeZip3NAZV');
-    
+
       const storage = await contract.storage();
       // console.log(storage.valueMap);
       let campaign;
@@ -28,10 +25,8 @@ class CampaignShow extends Component {
           })
         }
       });
-      
+
     console.log(campaign);
-    // const campaign = Campaign(props.query.address);
-    // const summary = await campaign.methods.getSummary().call();
     return {
       address: props.query.address,
       minimumContribution: campaign.minimumContribution / 1000000,

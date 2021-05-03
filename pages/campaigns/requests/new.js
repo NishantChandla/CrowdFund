@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Form, Button, Message, Input } from 'semantic-ui-react';
-// import Campaign from '../../../ethereum/campaign';
-// import web3 from '../../../ethereum/web3';
 import { Link, Router } from '../../../routes';
 import Layout from '../../../components/Layout';
 import { BeaconWallet } from "@taquito/beacon-wallet";
@@ -30,7 +28,6 @@ class RequestNew extends Component {
   onSubmit = async event => {
     event.preventDefault();
 
-    // const campaign = Campaign(this.props.address);
     // const { description, value, recipient } = this.state;
 
     this.setState({ loading: true, errorMessage: '' });
@@ -61,9 +58,6 @@ class RequestNew extends Component {
           rpcUrl: "https://edonet.smartpy.io/"
         }
       });
-      // this.setState({isConnected:true});
-
-      // gets user's address
       console.log('yes')
 
       let s = this.props.address;
@@ -73,10 +67,6 @@ class RequestNew extends Component {
       await op.confirmation();
 
 
-      // const accounts = await web3.eth.getAccounts();
-      // await campaign.methods
-      //   .createRequest(description, web3.utils.toWei(value, 'ether'), recipient)
-      //   .send({ from: accounts[0] });
 
       Router.pushRoute(`/campaigns/${this.props.address}/requests`);
     } catch (err) {

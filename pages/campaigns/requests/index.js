@@ -3,7 +3,6 @@ import { Button, Table } from 'semantic-ui-react';
 import { Link } from '../../../routes';
 import Layout from '../../../components/Layout';
 import { TezosToolkit } from '@taquito/taquito';
-// import Campaign from '../../../ethereum/campaign';
 import RequestRow from '../../../components/RequestRow';
 
 class RequestIndex extends Component {
@@ -27,22 +26,8 @@ class RequestIndex extends Component {
             requests.push({complete:one.complete,description:one.description,recipient:one.recipent,value:one.value.c[0]/1000000,approvalCount: one.approvecount.c[0]});
             requestCount+=1;
           })
-          // campaign = {name:key.name,description:key.description,id:value,balance:0,requestsCount:0,approversCount:key.approverCount,manager:'tz1',minimumContribution:key.minimumAmount};
         }
       });
-      // console.log(requests);
-    // const campaign = Campaign(address);
-    // const requestCount = await campaign.methods.getRequestsCount().call();
-    // const approversCount = await campaign.methods.approversCount().call();
-
-    // const requests = await Promise.all(
-    //   Array(parseInt(requestCount))
-    //     .fill()
-    //     .map((element, index) => {
-    //       return campaign.methods.requests(index).call();
-    //     })
-    // );
-
     return { address, requests, requestCount, approversCount };
   }
 
