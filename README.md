@@ -51,7 +51,7 @@ Live - http://crowdfundtezos.herokuapp.com/
   - Next.js
   - React.js
   - Semantic-ui-react
-  - Tanquito
+  - Taquito
   - Smart.py
   - Html, CSS
 - Backend
